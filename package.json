@@ -5,8 +5,8 @@
   "description": "My Electron application description",
   "main": ".webpack/main",
   "scripts": {
-    "start": "electron-forge start",
-    "package": "electron-forge package",
+    "start": "NODE_ENV=dev electron-forge start",
+    "package": "NODE_ENV=prod electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "echo \"No linting configured\""
@@ -62,30 +62,6 @@
                   "html": "./src/LoadingWindow/loading.html",
                   "js": "./src/LoadingWindow/loading.js",
                   "name": "loading_window"
-                },
-                {
-                  "html": "./src/ModalWindow/modal.html",
-                  "js": "./src/ModalWindow/modalgoogle.js",
-                  "name": "google_modal",
-                  "preload": {
-                    "js": "./src/ModalWindow/preload.js"
-                  }
-                },
-                {
-                  "html": "./src/ModalWindow/modal.html",
-                  "js": "./src/ModalWindow/modaloutlook.js",
-                  "name": "outlook_modal",
-                  "preload": {
-                    "js": "./src/ModalWindow/preload.js"
-                  }
-                },
-                {
-                  "html": "./src/ModalWindow/modal.html",
-                  "js": "./src/ModalWindow/modalgithub.js",
-                  "name": "github_modal",
-                  "preload": {
-                    "js": "./src/ModalWindow/preload.js"
-                  }
                 }
               ]
             }
@@ -133,6 +109,7 @@
     "jquery": "^3.5.1",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
+    "nedb": "^1.8.0",
     "node-abi": "^2.18.0",
     "passport": "^0.4.1",
     "passport-github": "^1.1.0",

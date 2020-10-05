@@ -108,6 +108,7 @@ var alltodos = new Vue({
   },
   async mounted(){
     var todos = await Ipc.get_all_todos();
+    //var todos = [];
     this.todos = sortByNormal(todos);
     //console.log(this.todos);
   },

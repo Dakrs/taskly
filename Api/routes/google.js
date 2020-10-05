@@ -9,7 +9,7 @@ var Task = require('../controllers/tasks')
 var Register = require('../controllers/register')
 var Utility = require('../utility')
 var Transaction = require('../controllers/transactions')
-let promise = Promise.resolve(); 
+let promise = Promise.resolve();
 
 
 
@@ -41,10 +41,10 @@ router.get('/tasks', async function(req, res) {
                   return addTasksTasks(element)
                 })
               })
-          
+
               promise.then(data => {
             //All tasks completed
-                console.log(data); 
+                console.log(data);
               });
           }
       })
@@ -77,11 +77,11 @@ router.get('/calendar', async function(req, res) {
 
         promise.then(data => {
           //All tasks completed
-        console.log(data); 
+        console.log(data);
         });
       })
-     
-          
+
+
       res.jsonp(ids_Calendars)
     })
   }
@@ -106,7 +106,7 @@ router.get('/emails', async function(req, res) {
         })
         promise.then(data => {
           //All tasks completed
-          console.log(data); 
+          console.log(data);
         });
       })
       return res.jsonp(emails)
@@ -290,10 +290,10 @@ function addTasksEmail(header,element){
 
       var bool = await Utility.todoRegex(header.value)
       if(bool){
-  
+
         var response = await Task.findByIdOrigin(element.id,"Google Gmail")
         if(response.length===0){
-  
+
             task._id = nanoid()
             task.idOrigin = element.id
             task.name = header.value
@@ -301,11 +301,11 @@ function addTasksEmail(header,element){
             task.owner = "me"
             task.state = 0
             task.priority=3
-  
+
             var x = await Task.insert(task)
             var register = await Register.get()
-           
-            
+
+
             await createTransaction(x,"Post",register[0].local)
             await Register.incLocal(register[0]._id)
             resolve(x);
@@ -314,7 +314,7 @@ function addTasksEmail(header,element){
         else
           resolve(false)
       }
-       else 
+       else
          resolve(false)
     }
     else resolve(false)

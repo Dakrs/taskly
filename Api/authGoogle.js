@@ -18,16 +18,16 @@ exports.authorize = (credentials,callback) => {
            if (dados.length >0){
                 oAuth2Client.setCredentials(dados[0].token)
                 return callback(oAuth2Client)
-           } 
-     
+           }
+
   })
 }
 
 async function insertToken(code,file) {
   const {client_secret, client_id, redirect_uris} = file.installed;
       const oAuth2Client = new google.auth.OAuth2(
-          client_id, 
-          client_secret, 
+          client_id,
+          client_secret,
           redirect_uris[0]
           );
           var response = await getTokenFromCode(oAuth2Client,code)
@@ -46,7 +46,7 @@ async function insertToken(code,file) {
         await Credential.insert(creden)
           response = true;
 
-   } 
+   }
     catch(err){
       console.error('Error retrieving access token', err);
     }
@@ -75,14 +75,7 @@ function getNewToken(oAuth2Client) {
   return authUrl
     }
 
-   
 
-    module.exports.getURL_to_access=getURL_to_access
-    module.exports.getNewToken=getNewToken
-    module.exports.insertToken=insertToken
-
-
-
-
-
-
+module.exports.getURL_to_access=getURL_to_access
+module.exports.getNewToken=getNewToken
+module.exports.insertToken=insertToken
