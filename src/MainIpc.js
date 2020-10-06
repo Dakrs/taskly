@@ -1,7 +1,7 @@
 const { ipcMain   } = require('electron');
 const axios = require('axios');
 var nanoid = require('nanoid');
-import { url } from './authGoogle';
+import { url, postCode, sync_google } from './authGoogle';
 import Task from './Database/tasks'
 
 const Store = require('electron-store');
@@ -17,28 +17,11 @@ export default function setIpc(){
 
   ipcMain.handle('store_google_api_key', async (event, ...args) => {
     var response=false
-    try {
-       var aux = await axios.post('http://localhost:4545/google/code',{
-         code : args[0]
-       })
-       response = aux.data
-       // 0 - por fazer // 1 - completa  // 2 - cancelada
-       store.set('GOOGLE_API_KEY',true);
+    try{
+      var aux = await postCode(args[0]);
+      store.set('GOOGLE_API_KEY',true);
 
-       if(store.has('JWT_TOKEN')){
-         var token = store.get('JWT_TOKEN');
-         var resp2;
-         try{
-           resp2 = await axios.get('https://amcyni.herokuapp.com/google/credentials',{headers: {'x-access-token': token}});
-           if (resp2.data.length === 0){
-             resp2 = await axios.get('http://localhost:4545/api/googleToken');
-             await axios.post('https://amcyni.herokuapp.com/api/google/token',{token: resp2.data.token},{headers: {'x-access-token': token}});
-           }
-         }
-         catch(err){
-           console.log(err);
-         }
-     }
+      console.log(aux);
     }
     catch(err) {
           console.error("Erro",err)
@@ -89,10 +72,10 @@ export default function setIpc(){
     }
 
     catch(err) {
-           return false
-       }
+        return false
+    }
 
-     return true
+    return true
   });
 
   ipcMain.handle('get_all_todos', async (event, ...args) => {
@@ -117,7 +100,8 @@ export default function setIpc(){
            if(element.date)
                element.date= new Date(element.date)
          });*/
-     return [];
+    const todos = await sync_google();
+    return todos;
   });
 
   ipcMain.handle('add_todo', async (event, ...args) => {

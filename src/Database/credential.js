@@ -2,12 +2,12 @@ const db = require('./db')
 
 export async function get(type){
   const res = new Promise((resolve,reject) => {
-   db.credentials.find({type:type},function(err, newDoc){
+   db.credentials.find({type:type},function(err, docs){
       if (err){
         resolve(null);
       }
       else
-        resolve(newDoc);
+        resolve(docs);
     })
   });
   return res;

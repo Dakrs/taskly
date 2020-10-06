@@ -29,6 +29,19 @@ export function selectAll(){
   return res;
 }
 
+
+export function findAll(){
+  const res = new Promise((resolve,reject) => {
+    db.tasks.find({},function(err,docs){
+      if(err)
+        return resolve([]);
+      return resolve(docs);
+    })
+  });
+  return res;
+}
+
+
 export function updateState(idTask,state){
   const res = new Promise((resolve,reject) => {
     db.tasks.update({_id : idTask},{$set : {state : state}},{},function(err, numReplaced){
@@ -59,5 +72,6 @@ export default{
   insert,
   selectAll,
   updateState,
-  updateById
+  updateById,
+  findAll
 }

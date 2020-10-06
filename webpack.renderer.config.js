@@ -36,11 +36,6 @@ rules.push({
 });
 
 module.exports = {
-  // Put your normal webpack config below here
-  /**
-  entry: {
-    loading_screen: './src/LoadingScreen/loading.js'
-  },*/
   resolve: {
     alias: {
       vue: 'vue/dist/vue.min.js' ,
@@ -49,18 +44,4 @@ module.exports = {
   module: {
     rules,
   },
-  /**
-  plugins: [
-    new HtmlWebpackPlugin({
-            hash: true,
-            title: 'My Awesome application',
-            myPageHeader: 'Hello World',
-            template: './src/LoadingScreen/loading.html',
-            chunks: ['loading_screen'],
-            filename: 'loading_screen/loading.html',
-        }),
-    new webpack.DefinePlugin({
-      'LOADING_SCREEN_WEBPACK_ENTRY': 'loading_screen/loading.html',
-    }),
-  ]*/
 };
