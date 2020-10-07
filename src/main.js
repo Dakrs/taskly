@@ -1,14 +1,15 @@
 const { app, BrowserWindow, ipcMain, shell} = require('electron');
 const path = require('path');
 const axios = require('axios');
-const LoadingWindow = require('./Electron/LoadingWindow');
-const MainWindow = require('./Electron/MainWindow');
+const MainWindow = require('./MainWindow/MainWindow');
+const TodoInfoWindow = require('./TodoInfoWindow/TodoInfoWindow');
 import setIpc from './MainIpc';
 import GoogleAuth from './authGoogle';
 
 
 let loadwin = null;
 let mainwin = null;
+let todowin = null;
 
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
   app.quit();
@@ -62,3 +63,37 @@ ipcMain.on('trigger-google-url', async (event,arg) => {
 	var url = await GoogleAuth.url();
 	shell.openExternal(url);
 });
+
+var modalRes = null;
+
+ipcMain.handle('toggle_todo_data', (event,...args) => {
+  todowin = new TodoInfoWindow(args[0],mainwin.window);
+
+  modalRes = new Promise((resolve,reject) => {
+    todowin.res = resolve;
+  });
+
+  todowin.window.once('ready-to-show',() => {
+    todowin.window.show();
+  });
+
+  todowin.window.once('closed',() => {
+    todowin = null;
+  });
+
+  return modalRes;
+})
+
+ipcMain.on('close-modal', (event,arg) => {
+  if (todowin !== null){
+    modalRes = null;
+    todowin.res(arg);
+    todowin.window.hide();
+    todowin.window.destroy();
+    //mainwin.window.setEnabled(true);
+  }
+})
+
+ipcMain.handle('get_todo_data', () => {
+  return todowin.data;
+})

@@ -2,7 +2,8 @@ const { ipcMain   } = require('electron');
 const axios = require('axios');
 var nanoid = require('nanoid');
 import { url, postCode, sync_google } from './authGoogle';
-import Task from './Database/tasks'
+import Task from './Database/tasks';
+import {drop} from './Database/credential';
 
 const Store = require('electron-store');
 const store = new Store();
@@ -31,12 +32,11 @@ export default function setIpc(){
 
   ipcMain.handle('complete_todo_id', async (event, ...id) => {
 
-    var response=false
+    var response = false;
     try {
        response = await Task.updateState(id[0],1);
-       console.log(response);
        // 0 - por fazer // 1 - completa  // 2 - cancelada
-       response=true;
+       response = true;
     }
     catch(err) {
       console.error("Erro",err)
@@ -47,15 +47,15 @@ export default function setIpc(){
   });
 
   ipcMain.handle('cancel_todo_id', async (event, ...id) => {
-    var response =false
+    var response = false
     try {
        response = await Task.updateState(id[0],2);
        // 0 - por fazer // 1 - completa  // 2 - cancelada
-       response =true
+       response = true
 
     }
     catch(err) {
-          console.error("Erro",err)
+      console.error("Erro",err)
     }
 
     return response;
@@ -66,16 +66,16 @@ export default function setIpc(){
 
     var response
     try {
-        todos[0].forEach(async (item) => {
+        await Promise.all(todos[0].forEach(async (item) => {
           await Task.updateById(item);
-        });
+        }));
     }
 
     catch(err) {
-        return false
+        return false;
     }
 
-    return true
+    return true;
   });
 
   ipcMain.handle('get_all_todos', async (event, ...args) => {
@@ -90,16 +90,6 @@ export default function setIpc(){
   });
 
   ipcMain.handle('get_google_todos', async (event, ...args) => {
-      /**
-      await axios.get('http://localhost:4545/google/tasks')
-      await axios.get('http://localhost:4545/google/calendar')
-      await axios.get('http://localhost:4545/google/emails')
-
-     let response = await axios.get('http://localhost:4545/api')
-     response.data.forEach(element => {
-           if(element.date)
-               element.date= new Date(element.date)
-         });*/
     const todos = await sync_google();
     return todos;
   });
@@ -112,6 +102,8 @@ export default function setIpc(){
             priority : args[0].priority,
             description : args[0].description,
             origin : "metodo",
+            importance: args[0].importance,
+            urgency: args[0].urgency
           });
     }
     catch(err) {
@@ -121,4 +113,10 @@ export default function setIpc(){
     return response;
 
   });
+
+  ipcMain.handle('reset-token-storage', async (event, ...args) => {
+    store.set('GOOGLE_API_KEY',false);
+    const res = await drop();
+    return res;
+  })
 }

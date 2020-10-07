@@ -61,9 +61,12 @@
                   }
                 },
                 {
-                  "html": "./src/LoadingWindow/loading.html",
-                  "js": "./src/LoadingWindow/loading.js",
-                  "name": "loading_window"
+                  "html": "./src/TodoInfoWindow/index.html",
+                  "js": "./src/TodoInfoWindow/renderer.js",
+                  "name": "todo_info",
+                  "preload": {
+                    "js": "./src/TodoInfoWindow/preload.js"
+                  }
                 }
               ]
             }

@@ -49,8 +49,8 @@ Vue.component('todo-info',{
     </div>
     <div class="card-footer text-muted specfooter" align="center">
       <div class="btn-group" role="group" aria-label="Basic example">
-        <button type="button" @click="complete()" class="btn btn-outline-success">Complete</button>
-        <button type="button" @click="cancel()" class="btn btn-outline-danger">Cancel</button>
+        <button type="button" @click="complete()" class="btn gradientGreen opacity">Complete</button>
+        <button type="button" @click="cancel()" class="btn gradientRed opacity">Cancel</button>
       </div>
     </div>
   </div>

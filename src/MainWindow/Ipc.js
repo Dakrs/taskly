@@ -55,6 +55,11 @@ export async function reset_credentials(){
   return result;
 }
 
+export async function toggle_todo_data(todo){
+  const result = ipcRenderer.invoke('toggle_todo_data',todo);
+  return result;
+}
+
 export default {store_google_api_key,
                 cancel_todo_id,
                 complete_todo_id,
@@ -66,4 +71,5 @@ export default {store_google_api_key,
                 triggerGOOGLE_URL,
                 getGOOGLEURL,
                 reset_credentials,
+                toggle_todo_data,
               }

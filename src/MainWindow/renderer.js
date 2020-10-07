@@ -61,6 +61,22 @@ Vue.component('add-todo',{
                 </select>
               </div>
             </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="inputImportance">Urgency</label>
+                <select name="importance" id="inputImportance" class="form-control">
+                  <option>Low</option>
+                  <option>High</option>
+                </select>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="inputUrgency">Urgency</label>
+                <select name="urgency" id="inputUrgency" class="form-control">
+                  <option>Low</option>
+                  <option>High</option>
+                </select>
+              </div>
+            </div>
             <div class="form-group">
               <label for="inputDescription">Description</label>
               <input name="description" type="text" class="form-control" id="inputDescription" maxlength="200">
@@ -90,6 +106,8 @@ Vue.component('add-todo',{
       obj.priority = +obj.priority;
       obj.origin = 'metodo';
 
+      console.log(obj);
+
       $('#ADDTODO-FORM').trigger("reset");
       func(obj);
     });
@@ -113,13 +131,18 @@ var alltodos = new Vue({
     //console.log(this.todos);
   },
   methods: {
-    toggleInfo: function (id) {
+    toggleInfo: async function (id) {
       const todo = this.todos.find(item => item._id === id);
       if (this.toggled !== null && this.toggled._id === id){
         this.toggled = null;
       }
       else{
-        this.toggled = todo;
+        //this.toggled = todo;
+        const res = await Ipc.toggle_todo_data(todo);
+        if (res === 2 || res === 1){
+          var todos = this.todos.filter(x => x._id !== id);
+          this.todos = todos;
+        }
       }
     },
     // botão complete todo main comp
@@ -291,6 +314,7 @@ var alltodos = new Vue({
     addTodo: async function (obj){
 
       const res = await Ipc.add_todo(obj);
+      console.log(res);
 
       if (typeof res !== 'undefined'){
         this.todos.push(res);

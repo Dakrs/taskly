@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/0aa1c12619.js" crossorigin="anonymous"></script>
   </head>
   <body>
     <div class="container" id="MAIN_COMP" style="min-height: 100vh; margin: 0; padding: 0">
@@ -12,7 +12,7 @@
             <i class="fa fa-plus-square-o fa-lg"  @click="toggleAddTodo()"></i>
           </span>
           <div class="sortBy">
-            <span class="text-muted noselect" style="font-size: 0.9rem">
+            <span class="text-muted noselect" style="font-size: 1.9vw">
                 SortBy
             </span>
             <table class="table table-borderless" style="margin-bottom:0">
@@ -39,7 +39,7 @@
             </table>
           </div>
           <div class="sync">
-            <span class="text-muted noselect" style="font-size: 0.9rem">
+            <span class="text-muted noselect" style="font-size: 1.9vw">
                 Sync
             </span>
             <table class="table table-borderless" style="margin-bottom:0">
@@ -53,13 +53,34 @@
               </tbody>
             </table>
           </div>
+          <div class="othermenu">
+            <span class="text-muted noselect" style="font-size: 1.9vw">
+                Text
+            </span>
+            <table class="table table-borderless" style="margin-bottom:0">
+              <tbody>
+                <tr>
+                  <td @click="test" class="fontSize text-left mouse">
+                    <i class="fas fa-chart-line"></i>
+                    Stats
+                  </td>
+                </tr>
+                <tr>
+                  <td @click="test" class="fontSize text-left mouse">
+                    <i class="fas fa-dumpster-fire"></i>
+                    Reset
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
           <div class="title bottomTittle">
             <p class="title">me<strong>todo</strong></p>
           </div>
         </div>
         <div class="col middle nomove" align="center">
           <h2 class="title">Your ToDos</h2>
-          <ul id="cards" style="list-style-type:none;">
+          <ul id="cards" style="list-style-type:none; padding-inline-start: 0px !important">
               <template v-for="(todo,index) in todos">
                 <li :key="todo._id">
                   <div class="card mb-3">

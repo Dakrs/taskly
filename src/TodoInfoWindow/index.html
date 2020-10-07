@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <script src="https://kit.fontawesome.com/0aa1c12619.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div id="TODO_INFO">
+      <span @click="goback()" style="margin: 5px">
+        <i class="fa fa-times fa-lg"></i>
+      </span>
+      <div class="container">
+        <template v-if="toggled !== null">
+          <h3 class="left">Details:</h3>
+          <todo-info
+            v-bind:todo="toggled"
+            :callback_cancel="cancel_toggle"
+            :callback_completed="complete_toggle"
+          ></todo-info>
+        </template>
+      </div>
+    </div>
+  </body>
+</html>
