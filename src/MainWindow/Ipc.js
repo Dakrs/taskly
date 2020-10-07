@@ -50,6 +50,11 @@ export async function getGOOGLEURL(){
   return result;
 }
 
+export async function reset_credentials(){
+  const result = await ipcRenderer.invoke('reset-token-storage');
+  return result;
+}
+
 export default {store_google_api_key,
                 cancel_todo_id,
                 complete_todo_id,
@@ -60,4 +65,5 @@ export default {store_google_api_key,
                 history,
                 triggerGOOGLE_URL,
                 getGOOGLEURL,
+                reset_credentials,
               }

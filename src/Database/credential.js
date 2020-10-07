@@ -39,8 +39,23 @@ export function update(type,token){
   return res;
 }
 
+export function drop(){
+  const res = new Promise((resolse,reject) => {
+    db.credentials.remove({},{multi: true}, (err,numRemoved) => {
+      if (err){
+        resolse(-1);
+      }
+      else{
+        resolse(numRemoved);
+      }
+    })
+  })
+  return res;
+}
+
 export default {
   get,
   insert,
-  update
+  update,
+  drop
 }

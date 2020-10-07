@@ -10,12 +10,6 @@ import GoogleAuth from './authGoogle';
 let loadwin = null;
 let mainwin = null;
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
-var shuttingDown;
-
-
-// Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
   app.quit();
 }
@@ -23,31 +17,18 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', async function () {
-  shuttingDown = false;
-	loadwin = new LoadingWindow();
-	loadwin.window.show();
+app.on('ready', function () {
+	//loadwin = new LoadingWindow();
+	//loadwin.window.show();
 
-	if (true){
-		mainwin = new MainWindow();
-		mainwin.window.once('ready-to-show',() => {
-			mainwin.window.show();
-			loadwin.window.hide();
-			loadwin.window.close();
-		});
-	}
-	else{
-		app.quit();
-	}
-});
-
-// Called before quitting...gives us an opportunity to shutdown the child process
-app.on('before-quit',function()
-{
-	log.info('gracefully shutting down...');
-
-	// Need this to make sure we don't kick things off again in the child process
-	shuttingDown = true;
+  mainwin = new MainWindow();
+  mainwin.window.once('ready-to-show',() => {
+    mainwin.window.webContents.on('did-finish-load', () => {
+      mainwin.window.show();
+      //loadwin.window.hide();
+      //loadwin.window.close();
+    })
+  });
 });
 
 // Quit when all windows are closed.
@@ -60,21 +41,15 @@ app.on('window-all-closed', function () {
 	}
 });
 
-
-process.on("SIGINT", function () {
-	//graceful shutdown
-	log.info('shutting down...');
-	process.exit();
-});
-
-
 app.on('activate', () => {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
-  if (BrowserWindow.getAllWindows().length === 0 && mainwin !== null) {
+  if (BrowserWindow.getAllWindows().length === 0) {
     mainwin = new MainWindow();
 		mainwin.window.once('ready-to-show', () => {
-			mainwin.window.show();
+      mainwin.window.webContents.on('did-finish-load', () => {
+        mainwin.window.show();
+      })
 		});
   }
 });

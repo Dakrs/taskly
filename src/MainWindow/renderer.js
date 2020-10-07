@@ -7,7 +7,6 @@ import './index.css';
 import Vue from 'vue';
 import Sortable from 'sortablejs';
 import './Components/todoinfo.js';
-//import './Components/apimodal.js';
 import './Components/modal.js';
 import {  sortByOrigin,
           sortByDate,
@@ -19,6 +18,7 @@ const Ipc = window.API.Ipc;
 const API = window.API;
 
 /**
+<i class="fas fa-chart-line"></i>
 Todo:
 id: 1,
 date: new Date(2017,1,1), !!!Pode ser null
@@ -48,7 +48,7 @@ Vue.component('add-todo',{
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="inputName">Name</label>
-                <input name="name" type="text" class="form-control" id="inputName" required>
+                <input name="name" type="text" class="form-control" id="inputName" maxlength="20" required>
               </div>
               <div class="form-group col-md-6">
               <label for="inputPriority">Priority</label>
@@ -63,7 +63,7 @@ Vue.component('add-todo',{
             </div>
             <div class="form-group">
               <label for="inputDescription">Description</label>
-              <input name="description" type="text" class="form-control" id="inputDescription">
+              <input name="description" type="text" class="form-control" id="inputDescription" maxlength="200">
             </div>
           </form>
         </div>
