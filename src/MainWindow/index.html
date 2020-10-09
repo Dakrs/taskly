@@ -140,16 +140,7 @@
             </ul>
         </div>
         <div class="col leftBorder right">
-          <div style="margin-top: 25.5%">
-            <template v-if="toggled !== null">
-              <h3 class="left">Details:</h3>
-              <todo-info
-                v-bind:todo="toggled"
-                :callback_cancel="cancel_toggle"
-                :callback_completed="complete_toggle"
-              ></todo-info>
-            </template>
-          </div>
+          <h2 class="title">Your Deadlines</h2>
           <div class="footer">
             <span class="footerText">made with <i class="fa fa-heart" style="color: red"></i> by AmCyNi</span>
           </div>
