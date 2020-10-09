@@ -3,7 +3,7 @@ window.$ = $;
 //require('bootstrap/js/dist/modal');
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './index.css';
+import './css/index.css';
 import Vue from 'vue';
 import Sortable from 'sortablejs';
 import './Components/todoinfo.js';
@@ -340,7 +340,7 @@ var alltodos = new Vue({
   },
 })
 
-
+/**
 var el = document.getElementById('cards')
 alltodos.sortableJS = Sortable.create(el,{
   animation: 150,
@@ -352,6 +352,6 @@ alltodos.sortableJS = Sortable.create(el,{
       alltodos.nor_DaD_update(evt.oldDraggableIndex,evt.newDraggableIndex);
     }
   },
-});
+});*/
 
 console.log('👋 This message is being logged by "renderer.js", included via webpack');

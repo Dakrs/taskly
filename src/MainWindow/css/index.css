@@ -1,0 +1,39 @@
+@import url("./leftColumn.css");
+@import url("./rightColumn.css");
+@import url("./middleColumn.css");
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,FredokaOne;
+  overflow: auto;
+  min-height: 100vh;
+  -webkit-app-region: drag;
+}
+
+html {
+    overflow: auto;
+    min-height: 100%;
+}
+
+div.mainContainer {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+td.text-left {
+  text-align: left;
+  vertical-align: bottom;
+}
+
+td.text-right {
+  text-align: right;
+  vertical-align: bottom;
+}
+
+td.nopadding {
+  padding: 0;
+}
+
+.mouse {
+  cursor: pointer;
+}

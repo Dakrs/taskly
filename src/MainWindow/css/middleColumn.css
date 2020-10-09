@@ -1,0 +1,137 @@
+div.middleColumn {
+  position: absolute;
+  top: 0px;
+  bottom: 0;
+  left: 33.4%;
+  overflow-y: scroll;
+  width: 44.44%;
+  background-color: white;
+  padding: 2.5%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 5%;
+}
+
+.header-col-left {
+  text-align: left;
+}
+
+.header-col-right {
+  text-align: right;
+}
+
+.yellow {
+  color: rgb(254, 203, 94);
+}
+
+.header-fontSize {
+  font-size: 3.5vw;
+}
+
+.iconSize-Header {
+  font-size: 3vw;
+}
+
+.btn-plus-header {
+  border-radius: 50%;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  color: #fff;
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+  width: 5vw;
+  height: 5vw;
+  background-color: rgb(254, 203, 94);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-plus-header:hover{
+  background-color: #FFD300;
+  box-shadow: 0px 7px 10px rgba(255, 211, 0,0.4);
+  color: #fff;
+}
+
+.card-task {
+  width: 100%;
+  padding: 15px;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: rgba(249, 250, 253, 1);
+  border-radius: 15px;
+  min-height: calc(2.75vw + 30px);
+  margin-bottom: 20px;
+}
+
+.card-task-completed {
+  background-color: rgb(254, 203, 94) !important;
+}
+
+.card-task-col-left{
+  background-color: white;
+  min-height: 2.75vw;
+  min-width: 2.75vw;
+  height: 2.75vw;
+  width: 2.75vw;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.25vw;
+  border-radius: 15%;
+  margin-right: 5%;
+}
+
+.card-task-col-middle{
+  min-height: 2.75vw;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.card-task-title {
+  display: block;
+  font-size: 1.7vw;
+}
+
+.card-task-content {
+  display: block;
+  font-size: 1.1vw;
+  margin: 0px;
+}
+
+.card-task-col-right{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-width: 4vw;
+  min-height: 2.75vw;
+}
+
+.card-task-col-right-text{
+  font-size: 0.8vw;
+  margin: 0px;
+}
+
+.tasks-container {
+  list-style-type: none;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow-y: scroll;
+}
+
+div.spaced:not(:last-child){
+  margin-bottom: 20px;
+}

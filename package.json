@@ -87,6 +87,7 @@
     "css-loader": "^3.6.0",
     "electron": "^9.0.0",
     "electron-positioner": "^4.1.0",
+    "file-loader": "^6.1.0",
     "googleapis": "^48.0.0",
     "html-webpack-plugin": "^3.2.0",
     "mongoose": "^5.9.24",
@@ -95,7 +96,8 @@
     "node-sass": "^4.14.1",
     "postcss-loader": "^3.0.0",
     "sass-loader": "^8.0.2",
-    "style-loader": "^0.23.1"
+    "style-loader": "^0.23.1",
+    "ttf-loader": "^1.0.2"
   },
   "dependencies": {
     "@microsoft/microsoft-graph-client": "^2.0.0",
