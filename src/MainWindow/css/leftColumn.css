@@ -58,6 +58,12 @@ div.spaced:not(:last-child){
   margin-bottom: 20px;
 }
 
+.weekly-card-container {
+  width: 100%;
+  padding: 0;
+  max-height: 70%;
+}
+
 .card-weekly {
   padding: 15px;
   width: 100%;
@@ -120,6 +126,7 @@ div.spaced:not(:last-child){
   width: 100%;
   min-height: calc(3vw + 15px);
   border-radius: 15px;
+  margin-bottom: 20px;
 }
 
 .card-weekly-add:hover{
@@ -234,6 +241,7 @@ table.spacing {
   padding: 0 !important;
   background-color: rgb(254, 203, 94);
   text-align: center;
+  font-size: 1.25vw;
 }
 
 .cirleText {

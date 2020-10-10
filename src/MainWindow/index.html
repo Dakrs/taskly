@@ -11,115 +11,11 @@
           <i class="fas fa-meteor iconSize-L"></i>
           <b class="taskly">taskly</b>
         </div>
-
-        <table class="table table-borderless">
-          <tbody>
-            <tr>
-              <td class="nopadding text-left">
-                <h4 class="weeklypineed nomargin">Weekly Pinned</h4>
-              </td>
-              <td class="nopadding text-right mouse">
-                <p class="viewall">View all</p>
-              </td>
-            </tr>
-         </tbody>
-        </table>
-        <div class="card-weekly spaced">
-          <div class="card-weekly-content">
-            <div class="card-weekly-content-col1">
-              <i class="fas fa-meteor"></i>
-            </div>
-            <div class="card-weekly-content-col2">
-              <b class="card-weekly-content-title">Call doctors for tests</b>
-              <p class="card-weekly-content-date nomargin">15 Mar 2020 - 9:00 AM</p>
-              <div class="card-weekly-content-tag">
-                <p class="nomargin">Personal</p>
-              </div>
-              <p class="card-weekly-content-description">Ask for blood tests and GYM certificate</p>
-            </div>
-          </div>
+        <div id="WEEKLY-PANNEL-COMP">
+          <weekly-pannel><weekly-pannel/>
         </div>
-        <div class="card-weekly spaced">
-          <div class="card-weekly-content">
-            <div class="card-weekly-content-col1">
-              <i class="fas fa-meteor"></i>
-            </div>
-            <div class="card-weekly-content-col2">
-              <b class="card-weekly-content-title">Beatrice's bday</b>
-              <p class="card-weekly-content-date nomargin">22 Mar 2020</p>
-            </div>
-          </div>
-        </div>
-        <div class="card-weekly-add spaced">
-          <div class="card-weekly-content">
-            <div class="card-weekly-add-content-col1">
-              <i style="color: white" class="fas fa-plus"></i>
-            </div>
-            <div class="card-weekly-add-content-col2">
-              <b class="card-weekly-add-content-title">Add new weekly pin</b>
-            </div>
-          </div>
-        </div>
-        <table class="table table-borderless">
-          <tbody>
-            <tr>
-              <td class="nopadding text-left">
-                <h4 class="weeklypineed nomargin">March, 2020</h4>
-              </td>
-              <td class="nopadding text-right mouse">
-                <p class="viewall">Two weeks</p>
-              </td>
-            </tr>
-         </tbody>
-        </table>
-        <div class="calendar">
-          <table class="table table-borderless spacing">
-            <tbody>
-              <tr>
-                <td class="dayofweek">
-                  Mon
-                </td>
-                <td class="dayofweek">
-                  Tue
-                </td>
-                <td class="dayofweek">
-                  Wed
-                </td>
-                <td class="dayofweek">
-                  Thu
-                </td>
-                <td class="dayofweek">
-                  Fri
-                </td>
-                <td class="dayofweek">
-                  Sat
-                </td>
-                <td class="dayofweek">
-                  Sun
-                </td>
-              </tr>
-              <tr>
-                <td class="notactive">1</td>
-                <td class="active"><p class="char nomargin">2</p></td>
-                <td class="active"><p class="char nomargin">3</p></td>
-                <td class="active"><p class="char nomargin">4</p></td>
-                <td class="notactive">5</td>
-                <td class="notactive">6</td>
-                <td class="notactive">7</td>
-              </tr>
-              <tr>
-                <td class="notactive">8</td>
-                <td class="active"><p class="char nomargin">9</p></td>
-                <td class="active"><p class="char nomargin">10</p></td>
-                <td class="active"><p class="char nomargin">11</p></td>
-                <td class="notactive">12</td>
-                <td class="notactive">13</td>
-                <td class="cirle">
-                  <p class="cirleText">14</p>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <div id="CALENDAR_COMP">
+          <calendar-tasks><calendar-tasks/>
         </div>
       </div>
       <div class="middleColumn">
@@ -135,35 +31,9 @@
           </div>
         </div>
         <ol class="tasks-container">
-          <li>
-            <div class="card-task card-task-completed">
-              <div class="card-task-col-left">
-                <i class="fas fa-clock"></i>
-              </div>
-              <div class="card-task-col-middle">
-                <b class="card-task-title">Wake up Buddy</b>
-              </div>
-              <div class="card-task-col-right">
-                <p class="card-task-col-right-text"> 7:00 AM</p>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="card-task">
-              <div class="card-task-col-left">
-                <i class="fas fa-clock"></i>
-              </div>
-              <div class="card-task-col-middle">
-                <b class="card-task-title">Wake up Buddy</b>
-                <p class="card-task-content">
-                  Zoom call, kick off with Elena and Jordan from Shift
-                </p>
-              </div>
-              <div class="card-task-col-right">
-                <p class="card-task-col-right-text"> 7:00 AM</p>
-              </div>
-            </div>
-          </li>
+           <template v-for="(task,index) in tasks">
+             <task-info :task="task"></task-info>
+           </template>
         </ol>
       </div>
       <div class="rightColumn">
