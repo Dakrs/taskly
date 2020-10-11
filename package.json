@@ -125,6 +125,7 @@
     "simple-oauth2": "^3.4.0",
     "sortablejs": "^1.10.2",
     "underscore": "^1.10.2",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "vuejs-datepicker": "^1.6.2"
   }
 }

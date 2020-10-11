@@ -127,6 +127,7 @@ div.spaced:not(:last-child){
   min-height: calc(3vw + 15px);
   border-radius: 15px;
   margin-bottom: 20px;
+  cursor: pointer;
 }
 
 .card-weekly-add:hover{
@@ -248,4 +249,8 @@ table.spacing {
   font-size: 1.25vw;
   color: black;
   margin: 0 !important;
+}
+
+.datepickerColor{
+  background-color: white !important;
 }
