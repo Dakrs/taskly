@@ -31,6 +31,17 @@ b.taskly {
   color: rgb(254, 203, 94);
 }
 
+.shift {
+  font-size: 3vw;
+  margin-left: 1vw;
+  margin-right: 1vw;
+}
+
+.shift:hover{
+  opacity: 0.7;
+  transform: translateY(-3px);
+}
+
 .viewall:hover {
   color: rgb(254, 203, 94,0.6);
 }
@@ -67,6 +78,7 @@ div.spaced:not(:last-child){
 .card-weekly {
   padding: 15px;
   width: 100%;
+  max-width: 28.3vw;
   min-height: calc(5vw + 15px);
   border-radius: 15px;
   background-color: white;
@@ -126,8 +138,8 @@ div.spaced:not(:last-child){
   width: 100%;
   min-height: calc(3vw + 15px);
   border-radius: 15px;
-  margin-bottom: 20px;
   cursor: pointer;
+  margin-bottom: 5px;
 }
 
 .card-weekly-add:hover{
@@ -174,6 +186,40 @@ div.spaced:not(:last-child){
   height: 2vw;
   width: 6vw;
   font-size: 1vw;
+  margin-right: 1vw;
+  /**
+  margin-top: 1vw;
+  margin-bottom: 1vw;*/
+}
+
+.card-weekly-content-tag-small {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(254, 203, 94);
+  border-radius: 1vw;
+  height: 2vw;
+  width: 2vw;
+  font-size: 1vw;
+  margin-right: 1vw;
+  /**
+  margin-top: 1vw;
+  margin-bottom: 1vw;*/
+}
+
+.green {
+  background-color: #00bdaa !important;
+}
+
+.red {
+  background-color: #eb4559 !important;
+}
+
+.card-weekly-tag-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
   margin-top: 1vw;
   margin-bottom: 1vw;
 }
@@ -253,4 +299,16 @@ table.spacing {
 
 .datepickerColor{
   background-color: white !important;
+}
+
+.modal-pin-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.margin-right{
+  margin-right: 10px !important;
 }

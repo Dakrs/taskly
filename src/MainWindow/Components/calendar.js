@@ -3,7 +3,8 @@ import Vue from 'vue';
 
 Vue.component('calendar-tasks',{
   props: {
-
+    callback: Function,
+    active: Number,
   },
   data: function () {
     var date = new Date();
@@ -31,6 +32,14 @@ Vue.component('calendar-tasks',{
       actual: date.getDate(),
       month: monthNames[date.getMonth()],
       year: date.getFullYear()
+    }
+  },
+  methods: {
+    handleClick: function(day,index){
+      index += 1;
+      if (index > 6)
+        index = 0;
+      this.callback(day,index);
     }
   },
   template:`
@@ -74,21 +83,23 @@ Vue.component('calendar-tasks',{
             </td>
           </tr>
           <tr>
-            <template v-for="i in firstrow">
-              <td v-if="(i == actual)" class="cirle">{{i}}</td>
+            <template v-for="(i,index) in firstrow">
+              <td v-if="(i == active)" class="cirle">{{i}}</td>
               <td v-else-if="false" class="active">
-                <p class="char nomargin">{{i}}</p>
+                <p @click="handleClick(i,index)" class="char nomargin mouse">{{i}}</p>
               </td>
               <td v-else class="notactive">{{i}}</td>
             </template>
           </tr>
           <tr>
-            <template v-for="i in secondrow">
-              <td v-if="(i == actual)" class="cirle">{{i}}</td>
+            <template v-for="(i,index) in secondrow">
+              <td v-if="(i == active)" class="cirle">{{i}}</td>
               <td v-else-if="false" class="active">
-                <p class="char nomargin">{{i}}</p>
+                <p @click="handleClick(i,index)" class="char nomargin mouse">{{i}}</p>
               </td>
-              <td v-else class="notactive">{{i}}</td>
+              <td v-else class="notactive">
+                <p class="nomargin">{{i}}</p>
+              </td>
             </template>
           </tr>
         </tbody>

@@ -15,14 +15,14 @@
           <weekly-pannel><weekly-pannel/>
         </div>
         <div id="CALENDAR_COMP">
-          <calendar-tasks><calendar-tasks/>
+          <calendar-tasks :callback="changeActive" :active="active"><calendar-tasks/>
         </div>
       </div>
       <div class="middleColumn">
         <div class="header">
           <div class="header-col-left">
             <h3 class="nomargin header-fontSize">Today's schedule</h3>
-            <h3 class="yellow nomargin header-fontSize">Thursday 11</h3>
+            <h3 class="yellow nomargin header-fontSize">{{day_of_week}}, {{active}}</h3>
           </div>
           <div class="header-col-right">
             <div class="btn-plus-header">

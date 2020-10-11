@@ -37,10 +37,20 @@ var example_tasks = [
   }
 ];
 
+var date_actual = new Date();
+var day_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday','Thursday','Friday','Saturday']
+
 var main_comp = new Vue({
   el: '#MAIN_COMP',
   data: {
     tasks: example_tasks,
+    active: date_actual.getDate(),
+    day_of_week: day_of_week[date_actual.getDay()]
   },
-  methods: {},
+  methods: {
+    changeActive: function(day,index){
+      this.active = day;
+      this.day_of_week = day_of_week[index];
+    }
+  },
 })

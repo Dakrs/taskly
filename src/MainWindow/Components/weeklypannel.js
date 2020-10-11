@@ -2,34 +2,34 @@ import $ from 'jquery';
 import Vue from 'vue';
 import Datepicker from 'vuejs-datepicker';
 
-
 Vue.component('weekly-pannel',{
   props: {},
   data: function () {
-    const cards = [
-      {
-        title: "Call doctors for tests",
-        icon: "fa-meteor",
-        tag: "Personal",
-        date: "15 Mar 2020 - 9:00 AM",
-        description: "Ask for blood tests and GYM certificate"
-      },
-      {
-        title: "Beatrice's bday",
-        icon: "fa-meteor",
-        tag: "",
-        date: "22 Mar 2020",
-        description: "Birthday of Beatrice, must call her"
-      }
-    ]
+    const cards = [];
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
 
     return {
-      cards: cards
+      cards: cards,
+      disableDate: {
+        to: yesterday
+      }
     }
   },
   methods: {
     triggerModal: function (){
       $('#weekly-add-modal').modal('show');
+    },
+    triggerListWeekly: function (){
+      $('#list-all-pins').modal('show');
+    },
+    rotate: function (direction){
+      if (this.cards.length > 0){
+        var arr = [...this.cards];
+        if (direction) arr.unshift(arr.pop());
+        else arr.push(arr.shift());
+        this.cards = arr;  
+      }
     }
   },
   template: `
@@ -40,8 +40,8 @@ Vue.component('weekly-pannel',{
           <td class="nopadding text-left">
             <h4 class="weeklypineed nomargin">Weekly Pinned</h4>
           </td>
-          <td class="nopadding text-right mouse">
-            <p class="viewall">View all</p>
+          <td v-if="cards.length > 0" class="nopadding text-right mouse">
+            <p @click="triggerListWeekly()" class="viewall">View all</p>
           </td>
         </tr>
      </tbody>
@@ -55,8 +55,16 @@ Vue.component('weekly-pannel',{
           <div class="card-weekly-content-col2">
             <b class="card-weekly-content-title">{{cards[0].title}}</b>
             <p class="card-weekly-content-date nomargin">{{cards[0].date}}</p>
-            <div class="card-weekly-content-tag">
-              <p class="nomargin">{{cards[0].tag}}</p>
+            <div class="card-weekly-tag-container">
+              <div class="card-weekly-content-tag">
+                <p class="nomargin">{{cards[0].tag}}</p>
+              </div>
+              <div :class="['card-weekly-content-tag-small', cards[0].importance === 'Low' ? 'green' : 'red']">
+                <p class="nomargin">I</p>
+              </div>
+              <div :class="['card-weekly-content-tag-small', cards[0].urgency === 'Low' ? 'green' : 'red']">
+                <p class="nomargin">U</p>
+              </div>
             </div>
             <p class="card-weekly-content-description">{{cards[0].description}}</p>
           </div>
@@ -73,7 +81,7 @@ Vue.component('weekly-pannel',{
           </div>
         </div>
       </div>
-      <div @click="triggerModal()" class="card-weekly-add spaced">
+      <div @click="triggerModal()" class="card-weekly-add">
         <div class="card-weekly-content">
           <div class="card-weekly-add-content-col1">
             <i style="color: white" class="fas fa-plus"></i>
@@ -83,6 +91,22 @@ Vue.component('weekly-pannel',{
           </div>
         </div>
       </div>
+      <table class="table table-borderless">
+        <tbody>
+          <tr>
+            <td class="nopadding text-right">
+              <span @click="rotate(true)" class="nomargin nopadding">
+                <i class="fas fa-caret-left shift mouse"></i>
+              </span>
+            </td>
+            <td class="nopadding text-left">
+              <span @click="rotate(false)" class="nomargin nopadding">
+                <i class="fas fa-caret-right shift mouse"></i>
+              </span>
+            </td>
+          </tr>
+       </tbody>
+      </table>
     </div>
     <div class="modal fade" id="weekly-add-modal" data-focus="true" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="-webkit-user-select: none;">
       <div class="modal-dialog modal-dialog-centered" role="document">
@@ -91,7 +115,7 @@ Vue.component('weekly-pannel',{
             <h5 class="modal-title" id="exampleModalCenterTitle">Add new Weekly Pin</h5>
           </div>
           <div class="modal-body">
-            <form id="ADDTODO-FORM">
+            <form id="ADD-WEEKLY-FORM">
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <label for="inputTitle">Title</label>
@@ -100,11 +124,11 @@ Vue.component('weekly-pannel',{
                 <div class="form-group col-md-6">
                   <label for="inputIcon">Icon</label>
                   <select name="icon" id="inputIcon" class="form-control">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                    <option>fa-meteor</option>
+                    <option>fa-bolt</option>
+                    <option>fa-dragon</option>
+                    <option>fa-broom</option>
+                    <option>fa-paper-plane</option>
                   </select>
                 </div>
               </div>
@@ -119,17 +143,71 @@ Vue.component('weekly-pannel',{
                 </div>
                 <div class="form-group col-md-6">
                   <label for="inputDate">Date</label>
-                  <datepicker :bootstrap-styling="true" name="date" id="inputDate" input-class="datepickerColor" required></datepicker>
+                  <datepicker :bootstrap-styling="true" :disabled-dates="disableDate" :value="new Date()" name="date" id="inputDate" input-class="datepickerColor" required="true"></datepicker>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="inputUrgency">Urgency</label>
+                  <select name="urgency" id="inputUrgency" class="form-control">
+                    <option>Low</option>
+                    <option>High</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="inputImportance">Importance</label>
+                  <select name="importance" id="inputImportance" class="form-control">
+                    <option>Low</option>
+                    <option>High</option>
+                  </select>
                 </div>
               </div>
               <div class="form-group">
                 <label for="inputDescription">Description</label>
-                <input name="description" type="text" class="form-control" id="inputDescription" maxlength="200">
+                <input name="description" type="text" class="form-control" id="inputDescription" maxlength="200" required>
               </div>
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-dark">Send</button>
+            <button type="submit" form="ADD-WEEKLY-FORM" class="btn btn-dark">Send</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade bd-example-modal-lg" id="list-all-pins" data-focus="true" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="-webkit-user-select: none;">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">Weekly Pins</h5>
+          </div>
+          <div class="modal-body">
+            <div class="modal-pin-container">
+              <template v-for="(task,index) in cards">
+                <div class="card-weekly spaced margin-right">
+                  <div class="card-weekly-content">
+                    <div class="card-weekly-content-col1">
+                      <i :class="['fas ' + task.icon]"></i>
+                    </div>
+                    <div class="card-weekly-content-col2">
+                      <b class="card-weekly-content-title">{{task.title}}</b>
+                      <p class="card-weekly-content-date nomargin">{{task.date}}</p>
+                      <div class="card-weekly-tag-container">
+                        <div class="card-weekly-content-tag">
+                          <p class="nomargin">{{task.tag}}</p>
+                        </div>
+                        <div :class="['card-weekly-content-tag-small', task.importance === 'Low' ? 'green' : 'red']">
+                          <p class="nomargin">I</p>
+                        </div>
+                        <div :class="['card-weekly-content-tag-small', task.urgency === 'Low' ? 'green' : 'red']">
+                          <p class="nomargin">U</p>
+                        </div>
+                      </div>
+                      <p class="card-weekly-content-description">{{task.description}}</p>
+                    </div>
+                  </div>
+                </div>
+              </template>
+            </div>
           </div>
         </div>
       </div>
@@ -138,6 +216,35 @@ Vue.component('weekly-pannel',{
   `,
   components: {
     Datepicker
+  },
+  mounted(){
+
+    const func = (obj) => {
+      var new_Array = [...this.cards];
+      new_Array.push(obj);
+      this.cards = new_Array;
+    }
+
+    $('#ADD-WEEKLY-FORM').on('submit',function(e){
+      e.preventDefault();
+      var obj = {};
+      $('#ADD-WEEKLY-FORM').serializeArray().forEach((item, i) => {
+        obj[item.name] = item.value;
+      });
+
+      var pindate = new Date(obj.date);
+      obj.date = pindate.toDateString();
+
+      pindate.setDate(pindate.getDate() - pindate.getDay());
+
+      obj.startday = pindate.toDateString();
+      pindate.setDate(pindate.getDate() + 6);
+      obj.endday = pindate.toDateString();
+
+      $('#ADD-WEEKLY-FORM').trigger("reset");
+      $('#weekly-add-modal').modal('hide');
+      func(obj);
+    })
   }
 })
 
@@ -181,4 +288,45 @@ Vue.component('weekly-pannel',{
   </div>
 </div>
 
+*/
+/**
+<div class="modal fade" id="list-all-pins" data-focus="true" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="-webkit-user-select: none;">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Weekly Pins</h5>
+      </div>
+      <div class="modal-body">
+        <div class="weekly-card-container">
+          <template v-for="(task,index) in cards">
+            <div class="card-weekly-content">
+              <div class="card-weekly-content-col1">
+                <i :class="['fas ' + task.icon]"></i>
+              </div>
+              <div class="card-weekly-content-col2">
+                <b class="card-weekly-content-title">{{task.title}}</b>
+                <p class="card-weekly-content-date nomargin">{{task.date}}</p>
+                <div class="card-weekly-tag-container">
+                  <div class="card-weekly-content-tag">
+                    <p class="nomargin">{{task.tag}}</p>
+                  </div>
+                  <div :class="['card-weekly-content-tag-small', task.importance === 'Low' ? 'green' : 'red']">
+                    <p class="nomargin">I</p>
+                  </div>
+                  <div :class="['card-weekly-content-tag-small', task.urgency === 'Low' ? 'green' : 'red']">
+                    <p class="nomargin">U</p>
+                  </div>
+                </div>
+                <p class="card-weekly-content-description">{{task.description}}</p>
+              </div>
+            </div>
+          </template>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" form="ADD-WEEKLY-FORM" class="btn btn-dark">Send</button>
+      </div>
+    </div>
+  </div>
+</div>
 */

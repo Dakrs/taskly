@@ -25,6 +25,11 @@ td.text-left {
   vertical-align: bottom;
 }
 
+td.text-center {
+  text-align: center;
+  vertical-align: bottom;
+}
+
 td.text-right {
   text-align: right;
   vertical-align: bottom;
