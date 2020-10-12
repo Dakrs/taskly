@@ -6,38 +6,8 @@ export async function store_google_api_key(key){
   return result;
 }
 
-export async function cancel_todo_id(id){
-  const result = await ipcRenderer.invoke('cancel_todo_id', id);
-  return result;
-}
-
-export async function complete_todo_id(id){
-  const result = await ipcRenderer.invoke('complete_todo_id', id);
-  return result;
-}
-
-export async function update_list_index(list){
-  const result = await ipcRenderer.invoke('update_list_index', list);
-  return result;
-}
-
-export async function get_all_todos(){
-  const result = await ipcRenderer.invoke('get_all_todos');
-  return result;
-}
-
 export async function get_google_todos(){
   const result = await ipcRenderer.invoke('get_google_todos');
-  return result;
-}
-
-export async function add_todo(todo){
-  const result = await ipcRenderer.invoke('add_todo',todo);
-  return result;
-}
-
-export async function history(){
-  const result = await ipcRenderer.invoke('history');
   return result;
 }
 
@@ -55,21 +25,33 @@ export async function reset_credentials(){
   return result;
 }
 
-export async function toggle_todo_data(todo){
-  const result = ipcRenderer.invoke('toggle_todo_data',todo);
+export async function add_weekly_pin(obj){
+  const result = await ipcRenderer.invoke('add-weekly-pins',obj);
+  return result;
+}
+
+export async function get_weekly_pinned(){
+  const result = await ipcRenderer.invoke('get-weekly-pins');
+  return result;
+}
+
+export async function add_task_routine(obj){
+  const result = await ipcRenderer.invoke('add-task-routine',obj);
+  return result;
+}
+
+export async function get_routine(){
+  const result = await ipcRenderer.invoke('get-routine');
   return result;
 }
 
 export default {store_google_api_key,
-                cancel_todo_id,
-                complete_todo_id,
-                update_list_index,
-                get_all_todos,
                 get_google_todos,
-                add_todo,
-                history,
                 triggerGOOGLE_URL,
                 getGOOGLEURL,
                 reset_credentials,
-                toggle_todo_data,
+                add_weekly_pin,
+                get_weekly_pinned,
+                add_task_routine,
+                get_routine
               }

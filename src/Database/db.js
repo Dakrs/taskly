@@ -32,6 +32,8 @@ const dbFactory = (filename) => {
 
 const db = {
   credentials: dbFactory('credentials.db'),
-  tasks: dbFactory('tasks.db')
+  tasks: dbFactory('tasks.db'),
+  weeklypins: dbFactory('weeklypins.db'),
+  routine: dbFactory('routine.db')
 };
 module.exports = db;

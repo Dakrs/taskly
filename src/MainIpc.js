@@ -2,7 +2,8 @@ const { ipcMain   } = require('electron');
 const axios = require('axios');
 var nanoid = require('nanoid');
 import { url, postCode, sync_google } from './authGoogle';
-import Task from './Database/tasks';
+import Routine from './Database/routine';
+import WeeklyPin from './Database/weeklypins';
 import {drop} from './Database/credential';
 
 const Store = require('electron-store');
@@ -30,93 +31,72 @@ export default function setIpc(){
     return response
   });
 
-  ipcMain.handle('complete_todo_id', async (event, ...id) => {
-
-    var response = false;
-    try {
-       response = await Task.updateState(id[0],1);
-       // 0 - por fazer // 1 - completa  // 2 - cancelada
-       response = true;
-    }
-    catch(err) {
-      console.error("Erro",err)
-      }
-
-    return response;
-
-  });
-
-  ipcMain.handle('cancel_todo_id', async (event, ...id) => {
-    var response = false
-    try {
-       response = await Task.updateState(id[0],2);
-       // 0 - por fazer // 1 - completa  // 2 - cancelada
-       response = true
-
-    }
-    catch(err) {
-      console.error("Erro",err)
-    }
-
-    return response;
-
-  });
-
-  ipcMain.handle('update_list_index', async (event, ...todos) => {
-
-    var response
-    try {
-        await Promise.all(todos[0].forEach(async (item) => {
-          await Task.updateById(item);
-        }));
-    }
-
-    catch(err) {
-        return false;
-    }
-
-    return true;
-  });
-
-  ipcMain.handle('get_all_todos', async (event, ...args) => {
-    const todos = await Task.selectAll();
-    todos.forEach(item => {
-      if (item.hasOwnProperty('date'))
-        item.date = new Date(item.date);
-    });
-
-    return todos;
-
-  });
-
   ipcMain.handle('get_google_todos', async (event, ...args) => {
     const todos = await sync_google();
     return todos;
-  });
-
-  ipcMain.handle('add_todo', async (event, ...args) => {
-    var response;
-    try {
-          response = await Task.insert({
-            name : args[0].name,
-            priority : args[0].priority,
-            description : args[0].description,
-            origin : "metodo",
-            importance: args[0].importance,
-            urgency: args[0].urgency
-          });
-    }
-    catch(err) {
-      console.log(err);
-      return null
-    }
-    return response;
-
   });
 
   ipcMain.handle('reset-token-storage', async (event, ...args) => {
     store.set('GOOGLE_API_KEY',false);
     const res = await drop();
     return res;
+  })
+
+  ipcMain.handle('get-weekly-pins', async (event,...args) => {
+    const today = new Date();
+    const start = new Date(today.setDate(today.getDate() - today.getDay()));
+    const end = new Date(today.setDate(today.getDate() + 6));
+
+    start.setHours(0,0,0,0);
+    end.setHours(23,59,59,0);
+
+    const weeklypins = await WeeklyPin.findAll();
+    const res = weeklypins.filter((item) => {
+      const pin_date = new Date(item.date);
+      return ((pin_date.getTime() >= start.getTime()) && (pin_date.getTime() <= end.getTime()));
+    })
+    return res;
+  })
+
+  ipcMain.handle('add-weekly-pins', async (event,...args) => {
+    const res = await WeeklyPin.insert(args[0]);
+    return res;
+  })
+
+  ipcMain.handle('add-task-routine',async (event,...args) => {
+    const res = await Routine.insert(args[0]);
+    return res;
+  })
+
+  ipcMain.handle('get-routine',async (event,...args) => {
+    const res = await Routine.findAll();
+
+    var prevMonday = new Date();
+    prevMonday.setDate(prevMonday.getDate() - (prevMonday.getDay() + 6) % 7);
+
+
+    const tasks_per_day = {};
+
+    for(var i = 0; i < 14; i++){
+      tasks_per_day[prevMonday.toDateString()] = [];
+      prevMonday.setDate(prevMonday.getDate() + 1);
+    }
+
+    var dt_str;
+    res.forEach((item, i) => {
+      const date = new Date(item.date);
+      dt_str = date.toDateString();
+      if (dt_str in tasks_per_day){
+        tasks_per_day[dt_str].push(item);
+      }
+    });
+
+    for (const [key, value] of Object.entries(tasks_per_day)) {
+      value.sort((a,b) => {
+        return new Date(a.date) - new Date(b.date);
+      })
+    }
+
+    return tasks_per_day;
   })
 }

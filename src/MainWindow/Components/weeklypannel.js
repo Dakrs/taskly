@@ -2,6 +2,8 @@ import $ from 'jquery';
 import Vue from 'vue';
 import Datepicker from 'vuejs-datepicker';
 
+const Ipc = window.API.Ipc;
+
 Vue.component('weekly-pannel',{
   props: {},
   data: function () {
@@ -28,7 +30,7 @@ Vue.component('weekly-pannel',{
         var arr = [...this.cards];
         if (direction) arr.unshift(arr.pop());
         else arr.push(arr.shift());
-        this.cards = arr;  
+        this.cards = arr;
       }
     }
   },
@@ -217,15 +219,31 @@ Vue.component('weekly-pannel',{
   components: {
     Datepicker
   },
-  mounted(){
+  async mounted(){
 
-    const func = (obj) => {
-      var new_Array = [...this.cards];
-      new_Array.push(obj);
-      this.cards = new_Array;
+    const weeklypins = await Ipc.get_weekly_pinned();
+    this.cards = weeklypins;
+
+    const func = async (obj) => {
+      const res = await Ipc.add_weekly_pin(obj);
+
+      if(res){
+        const today = new Date();
+        const start = new Date(today.setDate(today.getDate() - today.getDay()));
+        const end = new Date(today.setDate(today.getDate() + 6));
+
+        start.setHours(0,0,0,0);
+        end.setHours(23,59,59,0);
+        const pin_date = new Date(res.date);
+        if ((pin_date.getTime() >= start.getTime()) && (pin_date.getTime() <= end.getTime())){
+          var new_Array = [...this.cards];
+          new_Array.push(res);
+          this.cards = new_Array;
+        }
+      }
     }
 
-    $('#ADD-WEEKLY-FORM').on('submit',function(e){
+    $('#ADD-WEEKLY-FORM').on('submit', async function(e){
       e.preventDefault();
       var obj = {};
       $('#ADD-WEEKLY-FORM').serializeArray().forEach((item, i) => {
@@ -243,7 +261,8 @@ Vue.component('weekly-pannel',{
 
       $('#ADD-WEEKLY-FORM').trigger("reset");
       $('#weekly-add-modal').modal('hide');
-      func(obj);
+
+      await func(obj);
     })
   }
 })

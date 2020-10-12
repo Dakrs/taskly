@@ -25,16 +25,17 @@
             <h3 class="yellow nomargin header-fontSize">{{day_of_week}}, {{active}}</h3>
           </div>
           <div class="header-col-right">
-            <div class="btn-plus-header">
+            <div @click="triggerAddModal()" class="btn-plus-header">
               <i class="fas fa-plus iconSize-Header"></i>
             </div>
           </div>
         </div>
-        <ol class="tasks-container">
+        <ol v-if="!isLoading" class="tasks-container">
            <template v-for="(task,index) in tasks">
              <task-info :task="task"></task-info>
            </template>
         </ol>
+        <task-add-modal :submit="submitTask"><task-add-modal/>
       </div>
       <div class="rightColumn">
         <p>H3</p>

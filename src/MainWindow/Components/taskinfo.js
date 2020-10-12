@@ -6,7 +6,8 @@ Vue.component('task-info',{
     task: Object,
   },
   methods: {
-    getHour: function(date){
+    getHour: function(str_date){
+      const date = new Date(str_date);
       var hours = date.getHours();
       var minutes = date.getMinutes();
       var ampm = hours >= 12 ? 'PM' : 'AM';
@@ -16,7 +17,8 @@ Vue.component('task-info',{
       var strTime = hours + ':' + minutes + ' ' + ampm;
       return strTime;
     },
-    completed: function(date){
+    completed: function(str_date){
+      const date = new Date(str_date);
       const now = new Date();
       return (now.getTime() > date.getTime());
     }
