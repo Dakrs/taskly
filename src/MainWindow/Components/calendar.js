@@ -5,6 +5,7 @@ Vue.component('calendar-tasks',{
   props: {
     callback: Function,
     active: Number,
+    set: Object,
   },
   data: function () {
     var date = new Date();
@@ -16,11 +17,11 @@ Vue.component('calendar-tasks',{
     const secondrow = []
 
     for(var i = 0; i < 7; i++){
-      firstrow.push(prevMonday.getDate());
+      firstrow.push(new Date(prevMonday));
       prevMonday.setDate(prevMonday.getDate() + 1);
     }
     for(var i = 0; i < 7; i++){
-      secondrow.push(prevMonday.getDate());
+      secondrow.push(new Date(prevMonday));
       prevMonday.setDate(prevMonday.getDate() + 1);
     }
 
@@ -31,7 +32,8 @@ Vue.component('calendar-tasks',{
       secondrow: secondrow,
       actual: date.getDate(),
       month: monthNames[date.getMonth()],
-      year: date.getFullYear()
+      year: date.getFullYear(),
+      today: date.getDate()
     }
   },
   methods: {
@@ -84,21 +86,23 @@ Vue.component('calendar-tasks',{
           </tr>
           <tr>
             <template v-for="(i,index) in firstrow">
-              <td v-if="(i == active)" class="cirle">{{i}}</td>
-              <td v-else-if="false" class="active">
-                <p @click="handleClick(i,index)" class="char nomargin mouse">{{i}}</p>
+              <td v-if="(i.getDate() == active)" @click="handleClick(i,index)" class="cirle">{{i.getDate()}}</td>
+              <td v-else-if="(set !== null && set[i.toDateString()] > 0)" class="active">
+                <p @click="handleClick(i,index)" class="char nomargin mouse">{{i.getDate()}}</p>
               </td>
-              <td v-else class="notactive">{{i}}</td>
+              <td v-else-if="(i.getDate() == today)" @click="handleClick(i,index)" class="notactive mouse">{{i.getDate()}}</td>
+              <td v-else class="notactive">{{i.getDate()}}</td>
             </template>
           </tr>
           <tr>
             <template v-for="(i,index) in secondrow">
-              <td v-if="(i == active)" class="cirle">{{i}}</td>
-              <td v-else-if="false" class="active">
-                <p @click="handleClick(i,index)" class="char nomargin mouse">{{i}}</p>
+              <td v-if="(i.getDate() == active)" @click="handleClick(i,index)" class="cirle">{{i.getDate()}}</td>
+              <td v-else-if="(set !== null && set[i.toDateString()] > 0)" class="active">
+                <p @click="handleClick(i,index)" class="char nomargin mouse">{{i.getDate()}}</p>
               </td>
+              <td v-else-if="(i.getDate() == today)" @click="handleClick(i,index)" class="notactive mouse">{{i.getDate()}}</td>
               <td v-else class="notactive">
-                <p class="nomargin">{{i}}</p>
+                <p class="nomargin">{{i.getDate()}}</p>
               </td>
             </template>
           </tr>

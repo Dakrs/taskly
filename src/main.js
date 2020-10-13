@@ -6,6 +6,7 @@ const TodoInfoWindow = require('./TodoInfoWindow/TodoInfoWindow');
 import setIpc from './MainIpc';
 import GoogleAuth from './authGoogle';
 
+process.env.GOOGLE_API_KEY = 'AIzaSyDEtXdw6kit2jOvqVy5GFzLoEjfV_CzBds';
 
 let loadwin = null;
 let mainwin = null;

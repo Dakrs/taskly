@@ -97,6 +97,8 @@ Vue.component('task-add-modal',{
       obj.date = pindate.toDateString() + ' ' + obj.time;
       delete obj.time;
 
+      $('#ADD-TASK-FORM').trigger("reset");
+      $('#task-add-modal').modal('hide');
       func(obj);
     })
   },

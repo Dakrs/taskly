@@ -45,6 +45,11 @@ export async function get_routine(){
   return result;
 }
 
+export async function sync_google(){
+  const result = await ipcRenderer.invoke('sync_google');
+  return result;
+}
+
 export default {store_google_api_key,
                 get_google_todos,
                 triggerGOOGLE_URL,
@@ -53,5 +58,6 @@ export default {store_google_api_key,
                 add_weekly_pin,
                 get_weekly_pinned,
                 add_task_routine,
-                get_routine
+                get_routine,
+                sync_google
               }

@@ -69,6 +69,12 @@ div.middleColumn {
   border-radius: 15px;
   min-height: calc(2.75vw + 30px);
   margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+
+.card-task:hover {
+  transform: translateY(-2px);
 }
 
 .card-task-completed {
@@ -85,9 +91,16 @@ div.middleColumn {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 2.25vw;
+  font-size: 2vw;
   border-radius: 15%;
   margin-right: 5%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.rotationIcon:hover{
+  rotation-point:50% 50%;
+  transform: rotate(360deg);
+  transition: all .4s ease;
 }
 
 .card-task-col-middle{
@@ -128,8 +141,8 @@ div.middleColumn {
 .tasks-container {
   list-style-type: none;
   margin: 0 !important;
-  padding: 0 !important;
   overflow-y: scroll;
+  padding: 5px;
 }
 
 div.spaced:not(:last-child){

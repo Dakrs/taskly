@@ -15,7 +15,7 @@
           <weekly-pannel><weekly-pannel/>
         </div>
         <div id="CALENDAR_COMP">
-          <calendar-tasks :callback="changeActive" :active="active"><calendar-tasks/>
+          <calendar-tasks :callback="changeActive" :active="active" :set="set_ocu"><calendar-tasks/>
         </div>
       </div>
       <div class="middleColumn">
@@ -38,7 +38,18 @@
         <task-add-modal :submit="submitTask"><task-add-modal/>
       </div>
       <div class="rightColumn">
-        <p>H3</p>
+        <div>
+          <user-pannel :flag="loggedIn"></user-pannel>
+        </div>
+        <div>
+          <time-clock></time-clock>
+        </div>
+        <div v-if="loggedIn" class="button-sync">
+          <div class="button-sync-cut">
+            <p @click="handleSync()" class="nopadding button-sync-text">Sync</p>
+          </div>
+        </div>
+        <google-key-modal :submit_fun="handleGoogleModal"></google-key-modal>
       </div>
     </div>
     <!--div id="VUE-MODEL">

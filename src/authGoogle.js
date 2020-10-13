@@ -5,7 +5,7 @@ const readline = require('readline');
 const path = require('path')
 const fs = require('fs');
 import CredJson from './static/credentials.json';
-import Task from './Database/tasks';
+import Routine from './Database/routine';
 
 
 async function authorize(credentials){
@@ -109,16 +109,8 @@ async function listEvents(auth,idCalendario){
 export async function sync_google(){
   const auth = await authorize(CredJson);
   if (auth !== null){
-    const todoReg = new RegExp('^(\\[TODO\\])','i');
-    var allTodos = await Task.findAll();
+    var allTodos = await Routine.findAll();
     allTodos = allTodos.filter(element => element.hasOwnProperty('idOrigin'));
-
-    /**
-    groupedTodos = allTodos.reduce((rv,x) => {
-      (rv[x.origin] = rv[x.origin] || []).push(x);
-      return rv;
-    },{})
-    console.log(groupedTodos);*/
 
     var calendars_ids = await getCalendarIds(auth);
     var cal_events = {}
@@ -129,27 +121,31 @@ export async function sync_google(){
     var allEvents = [];
     for(var key in cal_events)
       allEvents = [...allEvents,...cal_events[key]];
-    allEvents = allEvents.filter(e => todoReg.test(e.summary) && (allTodos.find(k => k.idOrigin === e.id) === undefined));
-
+    allEvents = allEvents.filter(e => (allTodos.find(k => k.idOrigin === e.id) === undefined));
 
     await Promise.all(allEvents.map(async (e) => {
       var task = {}
       task.idOrigin = e.id;
-      task.date= e.start.date;
-      task.name = e.summary;
+      var date;
+      if (e.start.dateTime)
+        date = new Date(e.start.dateTime);
+      else
+        date = new Date(e.start.date);
 
-      if(e.description)
-        task.description = e.description;
+      const minutes = date.getMinutes();
+      const hours = date.getHours();
+      const sec = date.getSeconds();
+      task.date= date.toDateString() + ' ' + hours + ':' + minutes + ':' + sec;
+      task.title = e.summary;
 
-      task.origin = "Google Calendar";
-      task.priority = 3;
+      if(e.description && e.description.length < 200)
+        task.content = e.description;
 
-      await Task.insert(task);
+      task.icon = 'fa-google';
+
+      await Routine.insert(task);
     }));
   }
-
-  const todos = await Task.selectAll();
-  return todos;
 }
 
 export default {

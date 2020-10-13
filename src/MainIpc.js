@@ -24,6 +24,7 @@ export default function setIpc(){
       store.set('GOOGLE_API_KEY',true);
 
       console.log(aux);
+      response = aux;
     }
     catch(err) {
           console.error("Erro",err)
@@ -69,6 +70,40 @@ export default function setIpc(){
   })
 
   ipcMain.handle('get-routine',async (event,...args) => {
+    const res = await Routine.findAll();
+
+    var prevMonday = new Date();
+    prevMonday.setDate(prevMonday.getDate() - (prevMonday.getDay() + 6) % 7);
+
+
+    const tasks_per_day = {};
+
+    for(var i = 0; i < 14; i++){
+      tasks_per_day[prevMonday.toDateString()] = [];
+      prevMonday.setDate(prevMonday.getDate() + 1);
+    }
+
+    var dt_str;
+    res.forEach((item, i) => {
+      const date = new Date(item.date);
+      dt_str = date.toDateString();
+      if (dt_str in tasks_per_day){
+        tasks_per_day[dt_str].push(item);
+      }
+    });
+
+    for (const [key, value] of Object.entries(tasks_per_day)) {
+      value.sort((a,b) => {
+        return new Date(a.date) - new Date(b.date);
+      })
+    }
+
+    return tasks_per_day;
+  })
+
+  ipcMain.handle('sync_google',async (event,...args) => {
+    await sync_google();
+
     const res = await Routine.findAll();
 
     var prevMonday = new Date();

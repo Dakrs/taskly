@@ -9,12 +9,12 @@ Vue.component('google-key-modal',{
     goToURL: function(){
       window.API.Ipc.triggerGOOGLE_URL();
     },
-    submit: function(){
+    submit: async function(){
       const GOOGLE_KEY = $('#GOOGLE_INPUT_API_KEY').val();
       $('#GOOGLE_INPUT_API_KEY').val('');
       console.log(GOOGLE_KEY);
       if (GOOGLE_KEY.length > 6){
-        this.submit_fun(GOOGLE_KEY,1);
+        await this.submit_fun(GOOGLE_KEY);
       }
       else{
         alert('KEY TOO SHORT');

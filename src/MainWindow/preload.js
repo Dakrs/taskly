@@ -4,7 +4,7 @@ import API_MAIN from './Ipc';
 const store = new Store();
 
 //window.Test = false
-//store.set('GOOGLE_API_KEY',true);
+//store.delete('GOOGLE_API_KEY');
 
 /**
 console.log('welel');

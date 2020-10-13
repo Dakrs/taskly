@@ -5,6 +5,11 @@ Vue.component('task-info',{
   props: {
     task: Object,
   },
+  data: function () {
+    return {
+      extended: false,
+    }
+  },
   methods: {
     getHour: function(str_date){
       const date = new Date(str_date);
@@ -13,7 +18,7 @@ Vue.component('task-info',{
       var ampm = hours >= 12 ? 'PM' : 'AM';
       hours = hours % 12;
       hours = hours ? hours : 12; // the hour '0' should be '12'
-      minutes = minutes < 10 ? '0'+minutes : minutes;
+      minutes = minutes < 10 ? '0' + minutes : minutes;
       var strTime = hours + ':' + minutes + ' ' + ampm;
       return strTime;
     },
@@ -21,17 +26,20 @@ Vue.component('task-info',{
       const date = new Date(str_date);
       const now = new Date();
       return (now.getTime() > date.getTime());
+    },
+    extend: function(){
+      this.extended = !this.extended;
     }
   },
   template: `
   <li :key="task._id">
-    <div :class="['card-task', completed(task.date) ? 'card-task-completed' : '']">
+    <div @click="extend()" :class="['card-task', completed(task.date) ? 'card-task-completed' : '', task.hasOwnProperty('content') ? 'mouse' : '']">
       <div class="card-task-col-left">
-        <i :class="['fas ' + task.icon]"></i>
+        <i :class="[ task.icon === 'fa-google' ? 'fab ' + task.icon : 'fas ' + task.icon ,'rotationIcon']"></i>
       </div>
       <div class="card-task-col-middle">
         <b class="card-task-title">{{task.title}}</b>
-        <p v-if="task.hasOwnProperty('content')" class="card-task-content">
+        <p v-if="task.hasOwnProperty('content') && this.extended" class="card-task-content">
           {{task.content}}
         </p>
       </div>
