@@ -87,6 +87,7 @@
     "css-loader": "^3.6.0",
     "electron": "^9.0.0",
     "electron-positioner": "^4.1.0",
+    "file-loader": "^6.1.0",
     "googleapis": "^48.0.0",
     "html-webpack-plugin": "^3.2.0",
     "mongoose": "^5.9.24",
@@ -95,12 +96,14 @@
     "node-sass": "^4.14.1",
     "postcss-loader": "^3.0.0",
     "sass-loader": "^8.0.2",
-    "style-loader": "^0.23.1"
+    "style-loader": "^0.23.1",
+    "ttf-loader": "^1.0.2"
   },
   "dependencies": {
     "@microsoft/microsoft-graph-client": "^2.0.0",
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
+    "bootstrap-vue": "^2.17.3",
     "cookie-parser": "^1.4.5",
     "cookie-session": "^1.4.0",
     "dotenv": "^8.2.0",
@@ -113,6 +116,7 @@
     "jade": "^1.11.0",
     "jquery": "^3.5.1",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.1",
     "morgan": "^1.10.0",
     "nedb": "^1.8.0",
     "node-abi": "^2.18.0",
@@ -122,6 +126,7 @@
     "simple-oauth2": "^3.4.0",
     "sortablejs": "^1.10.2",
     "underscore": "^1.10.2",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "vuejs-datepicker": "^1.6.2"
   }
 }
