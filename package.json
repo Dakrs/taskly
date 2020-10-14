@@ -59,14 +59,6 @@
                   "preload": {
                     "js": "./src/MainWindow/preload.js"
                   }
-                },
-                {
-                  "html": "./src/TodoInfoWindow/index.html",
-                  "js": "./src/TodoInfoWindow/renderer.js",
-                  "name": "todo_info",
-                  "preload": {
-                    "js": "./src/TodoInfoWindow/preload.js"
-                  }
                 }
               ]
             }

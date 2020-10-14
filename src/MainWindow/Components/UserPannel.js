@@ -29,8 +29,5 @@ Vue.component('user-pannel',{
       </span>
     </div>
   </div>
-  `,
-  mounted(){
-    console.log(this.loggedIn);
-  }
+  `
 })
