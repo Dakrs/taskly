@@ -19,7 +19,7 @@ Vue.component('user-pannel',{
         <b @click="toggleModal()" class="userName userLogIn mouse">Log In</b>
       </template>
       <template v-else>
-        <b class="userName">Mark Collins</b>
+        <b class="userName">Diogo Sobral</b>
         <p class="settings">My Settings</p>
       </template>
     </div>
