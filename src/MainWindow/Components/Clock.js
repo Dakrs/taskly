@@ -27,7 +27,7 @@ Vue.component('time-clock',{
         console.log(weather);
 
         this.description = weather.description;
-        var key = weather.id / 100;
+        var key = Math.floor(weather.id / 100);
         switch (key) {
           case 0:
             break;
@@ -38,15 +38,15 @@ Vue.component('time-clock',{
             break;
 
           case 3:
-            this.icon = "fa-could-rain";
+            this.icon = "fa-cloud-rain";
             break;
 
           case 4:
-            this.icon = "fa-could-rain";
+            this.icon = "fa-cloud-rain";
             break;
 
           case 5:
-            this.icon = "fa-could-rain";
+            this.icon = "fa-cloud-rain";
             break;
 
           case 6:

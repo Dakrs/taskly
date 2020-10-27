@@ -97,6 +97,7 @@ var main_comp = new Vue({
       const update_task = await Ipc.sync_google();
       this.allTasks = update_task;
       this.tasks = this.allTasks[this.key];
+      this.computedOcurrences();
       alert('Sync completed');
     }
   },

@@ -99,7 +99,7 @@ async function listEvents(auth,idCalendario){
 
   const calendarios = await calendar.events.list({
     calendarId: idCalendario,
-    timeMax: new Date(new Date(start).setDate(start.getDate() + 365)),
+    timeMax: new Date(new Date(start).setDate(start.getDate() + 14)),
     timeMin: start
   });
 
@@ -121,7 +121,28 @@ export async function sync_google(){
     var allEvents = [];
     for(var key in cal_events)
       allEvents = [...allEvents,...cal_events[key]];
-    allEvents = allEvents.filter(e => (allTodos.find(k => k.idOrigin === e.id) === undefined));
+    console.log(allEvents);
+    /**
+    allEvents = allEvents.filter(e => {
+      const at_eve = allTodos.find(k => k.idOrigin === e.id);
+      const cond1 = (at_eve === undefined);
+      if (cond1){
+        return true;
+      }
+
+      const date_eve = new Date(at_eve.date);
+      var date_e2;
+      if (e.start.dateTime)
+        date_e2 = new Date(e.start.dateTime);
+      else
+        date_e2 = new Date(e.start.date);
+
+      if(date_e2.toDateString() === date_eve.toDateString()){
+        return true;
+      }
+      return false;
+    });*/
+    allEvents = allEvents.filter(e => allTodos.find(k => k.idOrigin === e.id) === undefined);
 
     await Promise.all(allEvents.map(async (e) => {
       var task = {}

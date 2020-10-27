@@ -44,9 +44,9 @@
         <div>
           <time-clock></time-clock>
         </div>
-        <div v-if="loggedIn" class="button-sync">
+        <div v-if="loggedIn" @click="handleSync()" class="button-sync">
           <div class="button-sync-cut">
-            <p @click="handleSync()" class="nopadding button-sync-text">Sync</p>
+            <p class="nopadding button-sync-text">Sync</p>
           </div>
         </div>
         <google-key-modal :submit_fun="handleGoogleModal"></google-key-modal>
